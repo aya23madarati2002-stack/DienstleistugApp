@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginMainActivity">
+
+    <TextView
+        android:id="@+id/tV_LogIn"
+        android:layout_width="173dp"
+        android:layout_height="85dp"
+        android:text="@string/tV_LogIn"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <EditText
+        android:id="@+id/eTEmail"
+        android:layout_width="267dp"
+        android:layout_height="59dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="E-mail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/eTPassword"
+        android:layout_width="270dp"
+        android:layout_height="64dp"
+        android:ems="10"
+        android:inputType="numberPassword"
+        android:text="Passwort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.595" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="256dp"
+        android:layout_height="62dp"
+        android:text="@string/button_login"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
+
+
+    <TextView
+        android:id="@+id/tV_register"
+        android:layout_width="286dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/tV_register"
+        android:textColor="#0000FF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.608"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.771" />
+
+    <TextView
+        android:id="@+id/tV_forget_password"
+        android:layout_width="251dp"
+        android:layout_height="47dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/tV_forget_password"
+        android:textColor="#0000FF"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.701" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

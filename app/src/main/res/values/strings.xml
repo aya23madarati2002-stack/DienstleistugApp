@@ -1,0 +1,45 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">DienstleistungApp</string>
+
+    <!-- Login-->
+    <string name="tV_LogIn">LogIn</string>
+    <string name="tV_register">Register?</string>
+    <string name="tV_forget_password">Forgot password?</string>
+    <string name="button_login">LogIn</string>
+
+    <!-- register-->
+    <string name="tV_Register">Register</string>
+    <string name="eT_Name">Name</string>
+    <string name="eT_LN">Last Name</string>
+    <string name="eT_Password">Password</string>
+    <string name="eT_Password2">repeat password</string>
+    <string name="tV_LI">LogIn?</string>
+    <string name="b_register">Register</string>
+
+    <!-- profile-->
+    <string name="b_go_back">Go Back</string>
+    <string name="b_book_A">Book an Appointment</string>
+
+    <!-- Settings-->
+    <string name="bS_back">Back</string>
+    <string name="b_logout">Logout</string>
+    <string name="b_resetpsw">Reset Password</string>
+    <string name="b_changeEmail">Change Email</string>
+    <string name="b_changeP">Change picture</string>
+    <string name="b_changePN">Cange Profilename</string>
+    <string name="tV_settings">Settings</string>
+
+    <!-- Home-->
+    <string name="b_browse">Browse</string>
+    <string name="b_profile">Profile</string>
+    <string name="b_apntm">Appointments</string>
+    <string name="b_settings">Settings</string>
+
+    <!-- Browse-->
+    <string name="b_backB">Back</string>
+
+    <!-- Appointments-->
+    <string name="b_backA">Back</string>
+
+
+</resources>
