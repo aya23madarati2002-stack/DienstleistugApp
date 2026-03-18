@@ -1,13 +1,33 @@
-Name : Aya Madarati 
-Matrikelnummer: 77204158016
-Studiengang: Wirtschaftsinformatik
-Hochschule: Hochschule für Wirtschaft und Recht 
+# Dienstleistungs App
 
-DienstleistugApp
-Eine Android App zur Vermittlung von Dienstleistungen.
+## Entwickler
 
-Funktionalitäten
-- Login / Registrierung
-- Dienstleister suchen und browsen
-- Termine buchen und verwalten
-- Einstellungen 
+Aya Madarati
+
+## Beschreibung
+
+Diese Android-App ist eine Dienstleistungs-App zur Verwaltung von Terminen. Nutzer können sich registrieren, einloggen und ihre Termine verwalten.
+
+## Funktionen
+
+* Login mit Firebase Authentication
+* Registrierung neuer Benutzer
+* Passwort zurücksetzen per E-Mail
+* Benutzerprofil bearbeiten (Name, Service und Stadt ändern)
+* Termine buchen
+* Termine umbuchen
+* Termine stornieren
+
+## Technologien
+
+* Java
+* Android Studio
+* Firebase Authentication
+
+## Ablauf
+
+Login → Home → Dienstleistung suchen → Dienstleister wählen → Termin buchen / verwalten → Profil bearbeiten → Logout
+
+## Hinweis
+
+Eine APK-Datei sowie ein Ablaufdiagramm sind im Repository enthalten.
