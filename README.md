@@ -28,6 +28,3 @@ Diese Android-App ist eine Dienstleistungs-App zur Verwaltung von Terminen. Nutz
 
 Login → Home → Dienstleistung suchen → Dienstleister wählen → Termin buchen / verwalten → Profil bearbeiten → Logout
 
-## Hinweis
-
-Eine APK-Datei sowie ein Ablaufdiagramm sind im Repository enthalten.
