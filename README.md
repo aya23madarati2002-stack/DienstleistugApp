@@ -1,6 +1,6 @@
 # Dienstleistungs App
 
-## Entwickler
+## Entwicklerin
 
 Aya Madarati
 
