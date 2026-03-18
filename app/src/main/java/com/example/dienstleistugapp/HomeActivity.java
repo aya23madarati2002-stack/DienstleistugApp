@@ -29,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
         Button apntm = findViewById(R.id.b_apntm);   // appointment Button
         Button settings = findViewById(R.id.b_settings);   // settings Button
 
+
+       // listener zum wechsel zu browse activity
         browse.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -39,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // listener zum wechsel zu profile activity
         pfl.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -49,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        // listener zum wechsel zu appointment activity
         apntm.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -60,10 +65,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // listener zum wechsel zu settings activity
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentS = new Intent(HomeActivity.this, settingsActivity.class);
+                Intent intentS = new Intent(HomeActivity.this, SettingsActivity.class);
                 startActivity(intentS);
 
             }

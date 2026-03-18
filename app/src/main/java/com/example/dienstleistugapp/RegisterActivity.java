@@ -1,8 +1,8 @@
-package com.example.dienstleistugapp;
+  package com.example.dienstleistugapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -10,96 +10,135 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
+    private EditText vN, nN, ct, sv, emailR, pwR, pwR2; // Deklaration der EditText-Felder als Klassenvariablen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        EditText vN = findViewById(R.id.eT_Name);   // edittext vorname
-        EditText nN = findViewById(R.id.eT_LN);     // edittext nachname
-        EditText emailR = findViewById(R.id.eT_EmailR);   // edittext email
-        EditText pwR = findViewById(R.id.eT_Password);    // // edittext password
-        EditText pwR2 = findViewById(R.id.eT_Password2);   // edittext password2
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        TextView loginR = findViewById(R.id.tV_LI);   //   logi? textview link zur login seite
+        // Initialisierung der EditText-Felder
+        vN = findViewById(R.id.eT_Name);
+        nN = findViewById(R.id.eT_LN);
+        ct = findViewById(R.id.et_city);
+        sv = findViewById(R.id.et_service);
+        emailR = findViewById(R.id.eT_EmailR);
+        pwR = findViewById(R.id.eT_Password);
+        pwR2 = findViewById(R.id.eT_Password2);
 
-        Button regitster = findViewById(R.id.b_register);   // registerbutton
+        TextView loginR = findViewById(R.id.tV_LI);
+        Button registerButton = findViewById(R.id.b_register);
 
-        regitster.setOnClickListener(new View.OnClickListener() {
+        // Registrieren-Button
+        registerButton.setOnClickListener(this::registerUser);
 
-            @Override
-            public void onClick(View v) {
+        // Login-Link
+        loginR.setOnClickListener(l -> startActivity(new Intent(this, LoginMainActivity.class)));
+    }
 
+    private void registerUser(View v) {
+        String vName = vN.getText().toString().trim();
+        String nName = nN.getText().toString().trim();
+        String city = ct.getText().toString().trim();
+        String service = sv.getText().toString().trim().toLowerCase();
+        String email = emailR.getText().toString().trim();
+        String password = pwR.getText().toString().trim();
+        String password2 = pwR2.getText().toString().trim();
 
-                // eingabe in string umwandeln !!
-                String vName = vN.getText().toString().trim();
-                String nName = nN.getText().toString().trim();
-                String email = emailR.getText().toString().trim();
-                String password = pwR.getText().toString().trim();
-                String password2 = pwR2.getText().toString().trim();
+        // Eingabevalidierung
+        if (!validateInput(vName, nName, city, service, email, password, password2)) {
+            return; // Abbruch der Registrierung, wenn die Validierung fehlschlägt
+        }
 
-                EditText[] fields = {vN, nN, emailR, pwR, pwR2};    //arraylist für eingabefelder
+        // Firebase Auth Registrierung
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && auth.getCurrentUser() != null) {
+                        String uid = auth.getCurrentUser().getUid();
+                        saveUserToFirestore(uid, vName, nName, city, service, email);
+                    } else {
+                        // Verbesserte Fehlerbehandlung für Firebase Auth Fehler
+                        String errorMessage = "Registrierung fehlgeschlagen: ";
+                        if (task.getException() != null) {
+                            if (task.getException() instanceof FirebaseAuthException) {
+                                errorMessage += ((FirebaseAuthException) task.getException()).getErrorCode() + " - " + task.getException().getMessage();
+                            } else {
+                                errorMessage += task.getException().getMessage();
+                            }
+                        } else {
+                            errorMessage += "Unbekannter Fehler";
+                        }
 
-                // vollständige eingabe prüfen
-                for (EditText field : fields) {
-                    if (field.getText().toString().trim().isEmpty()) {   // wenn nicht allle felder ausgefüllt sind fehlermeldung
-                        Toast.makeText(RegisterActivity.this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_SHORT).show();
-                        return;
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
                     }
-                }
-                // passwörter übereinstimmigkeit prüfen
-                if (!password.equals(password2)) {
-                    Toast.makeText(RegisterActivity.this, "Passwörter stimmen nicht überein", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                });
+    }
 
-                // email mit emails pattern vergleichen
-                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(RegisterActivity.this, "bitte gültiges email eingeben", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    private boolean validateInput(String vName, String nName, String city, String service, String email, String password, String password2) {
+        // Alle Felder prüfen
+        if (TextUtils.isEmpty(vName) || TextUtils.isEmpty(nName) || TextUtils.isEmpty(city) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(password2)) {
+            Toast.makeText(this, "Bitte alle Felder ausfüllen!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-                // für save Register
-                SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("Name", vName);
-                editor.putString("Lastname", nName);
-                editor.putString("email", email);
-                editor.putString("password", password);
-                editor.apply();
+        // Passwortprüfung
+        if (!password.equals(password2)) {
+            Toast.makeText(this, "Passwörter stimmen nicht überein", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-                Toast.makeText(RegisterActivity.this, "Registrierung erolgreich!", Toast.LENGTH_SHORT).show();
+        // E-Mail prüfen
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Bitte gültige E-Mail eingeben", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        // Passwortstärke prüfen (optional, aber empfohlen)
+        if (password.length() < 6) {
+            Toast.makeText(this, "Passwort muss mindestens 6 Zeichen lang sein", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-                // Wechsel zum HomeScreen
-                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish(); // damit man nicht zurück zum Register kann
+        return true;
+    }
 
+    private void saveUserToFirestore(String uid, String vName, String nName, String city, String service, String email) {
 
-            }
+        // Nutzerdaten in HashMap speichern
+        Map<String, Object> user = new HashMap<>();
+        user.put("firstname", vName);
+        user.put("lastname", nName);
+        user.put("city", city);
+        user.put("email", email);
+        if (!service.isEmpty()) user.put("service", service);
 
-
-        });
-
-        loginR.setOnClickListener( v -> {
-            Intent intentLG = new Intent(RegisterActivity.this, LoginMainActivity.class);
-            startActivity(intentLG);
-        });
-
+        db.collection("users")
+                .document(uid)
+                .set(user)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Registrierung erfolgreich!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(this, HomeActivity.class));
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Fehler beim Speichern: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
     }
 }

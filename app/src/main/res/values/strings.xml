@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">DienstleistungApp</string>
 
+
     <!-- Login-->
     <string name="tV_LogIn">LogIn</string>
     <string name="tV_register">Register?</string>
@@ -17,7 +18,7 @@
     <string name="b_register">Register</string>
 
     <!-- profile-->
-    <string name="b_go_back">Go Back</string>
+    <string name="b_go_back">Back</string>
     <string name="b_book_A">Book an Appointment</string>
 
     <!-- Settings-->
